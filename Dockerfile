@@ -1,4 +1,3 @@
-
 FROM python:3.13-slim
 
 WORKDIR /app
@@ -9,6 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ .
 
-EXPOSE 5000
+EXPOSE 10000
 
 CMD ["python", "api.py"]
