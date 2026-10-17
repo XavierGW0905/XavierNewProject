@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <title>XavierProject | Platform Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <a class="brand" href="#overview" aria-label="XavierProject home">
+                <span class="brand-icon">X</span>
+                <span>
+                    <strong>XavierProject</strong>
+                    <small>PLATFORM ENGINEERING</small>
+                </span>
+            </a>
+
+            <div class="nav-label">WORKSPACE</div>
+            <nav class="navigation" aria-label="Main navigation">
+                <a class="nav-link active" href="#overview" data-page="overview">
+                    <span class="nav-icon">▦</span> Overview
+                </a>
+                <a class="nav-link" href="#services" data-page="services">
+                    <span class="nav-icon">◈</span> Services
+                </a>
+                <a class="nav-link" href="#infrastructure" data-page="infrastructure">
+                    <span class="nav-icon">▤</span> Infrastructure
+                </a>
+                <a class="nav-link" href="#activity" data-page="activity">
+                    <span class="nav-icon">◷</span> Activity
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="environment-card">
+                    <span class="environment-dot"></span>
+                    <div>
+                        <strong>Development</strong>
+                        <small>Local environment</small>
+                    </div>
+                </div>
+                <div class="profile">
+                    <div class="avatar">XW</div>
+                    <div>
+                        <strong>Xavier Williams</strong>
+                        <small>Platform Engineer</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="menu-button" id="menu-toggle"
+                        aria-label="Toggle navigation" aria-expanded="false">
+                    ☰
+                </button>
+                <div class="breadcrumb">Workspace <span>/</span>
+                    <strong id="breadcrumb-page">Overview</strong>
+                </div>
+                <div class="topbar-right">
+                    <span class="environment-pill">
+                        <span class="environment-dot"></span> LOCAL
+                    </span>
+                    <span class="topbar-date" id="current-date">Loading date...</span>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <section class="page-heading">
+                    <div>
+                        <div class="eyebrow">YOUR PLATFORM AT A GLANCE</div>
+                        <h1 id="page-title">Platform Overview</h1>
+                        <p id="page-description">
+                            Monitor your services, infrastructure and platform health.
+                        </p>
+                    </div>
+                    <button class="button button-primary" id="refresh-button">
+                        <span aria-hidden="true">↻</span> Refresh status
+                    </button>
+                </section>
+
+                <div class="notice" id="notice" role="status" hidden></div>
+
+                <section class="metrics-grid" aria-label="Platform summary">
+                    <article class="metric-card">
+                        <div class="metric-top">
+                            <span class="metric-label">API HEALTH</span>
+                            <span class="metric-icon blue">⌁</span>
+                        </div>
+                        <div class="metric-value" id="api-metric">Checking...</div>
+                        <div class="metric-foot">
+                            <span class="status-dot" id="api-dot"></span>
+                            <span id="api-detail">Connecting to Flask API</span>
+                        </div>
+                    </article>
+
+                    <article class="metric-card">
+                        <div class="metric-top">
+                            <span class="metric-label">SERVICES</span>
+                            <span class="metric-icon purple">◈</span>
+                        </div>
+                        <div class="metric-value">1</div>
+                        <div class="metric-foot">Application API configured</div>
+                    </article>
+
+                    <article class="metric-card">
+                        <div class="metric-top">
+                            <span class="metric-label">CONTAINERS</span>
+                            <span class="metric-icon cyan">▤</span>
+                        </div>
+                        <div class="metric-value">—</div>
+                        <div class="metric-foot">Docker monitoring not connected</div>
+                    </article>
+
+                    <article class="metric-card">
+                        <div class="metric-top">
+                            <span class="metric-label">DEPLOYMENTS</span>
+                            <span class="metric-icon orange">⇧</span>
+                        </div>
+                        <div class="metric-value">—</div>
+                        <div class="metric-foot">CI/CD tracking not connected</div>
+                    </article>
+                </section>
+
+                <section class="content-grid">
+                    <article class="panel service-panel" id="service-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <h2>Service Health</h2>
+                                <p>Current status of your application services.</p>
+                            </div>
+                            <span class="subtle-label">LIVE CHECK</span>
+                        </div>
+
+                        <div class="service-row">
+                            <div class="service-symbol">API</div>
+                            <div class="service-info">
+                                <strong>XavierProject API</strong>
+                                <span>Flask · Port 5000</span>
+                                <code>/api/health</code>
+                            </div>
+                            <span class="status-badge status-checking" id="api-badge">
+                                Checking
+                            </span>
+                        </div>
+
+                        <div class="service-row">
+                            <div class="service-symbol frontend-symbol">WEB</div>
+                            <div class="service-info">
+                                <strong>Frontend Dashboard</strong>
+                                <span>HTML, CSS and JavaScript</span>
+                                <code>localhost:8080</code>
+                            </div>
+                            <span class="status-badge status-online">Serving</span>
+                        </div>
+
+                        <div class="panel-footer">
+                            <span id="last-checked">Health check has not run yet.</span>
+                            <button class="text-button" id="check-api-button">
+                                Check API →
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="panel environment-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <h2>Environment</h2>
+                                <p>Your local development setup.</p>
+                            </div>
+                            <span class="metric-icon blue">⌘</span>
+                        </div>
+
+                        <div class="environment-row">
+                            <span>Application</span>
+                            <strong>XavierProject</strong>
+                        </div>
+                        <div class="environment-row">
+                            <span>Backend</span>
+                            <strong>Python / Flask</strong>
+                        </div>
+                        <div class="environment-row">
+                            <span>Frontend</span>
+                            <strong>HTML / CSS / JS</strong>
+                        </div>
+                        <div class="environment-row">
+                            <span>API endpoint</span>
+                            <a href="http://127.0.0.1:5000/api/health"
+                               target="_blank" rel="noreferrer">Open ↗</a>
+                        </div>
+                        <div class="environment-row">
+                            <span>Containerisation</span>
+                            <span class="status-badge status-planned">Planned</span>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="panel infrastructure-panel" id="infrastructure-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Infrastructure</h2>
+                            <p>Components of your platform and their current integration status.</p>
+                        </div>
+                        <span class="subtle-label">ROADMAP</span>
+                    </div>
+
+                    <div class="infrastructure-grid">
+                        <div class="infra-card">
+                            <div class="infra-symbol blue">▣</div>
+                            <strong>Application</strong>
+                            <p>Flask API and web dashboard</p>
+                            <span class="status-badge status-online">Available</span>
+                        </div>
+                        <div class="infra-card">
+                            <div class="infra-symbol cyan">⬡</div>
+                            <strong>Docker</strong>
+                            <p>Container image and runtime</p>
+                            <span class="status-badge status-planned">Next phase</span>
+                        </div>
+                        <div class="infra-card">
+                            <div class="infra-symbol purple">⑂</div>
+                            <strong>CI/CD Pipeline</strong>
+                            <p>Automated testing and builds</p>
+                            <span class="status-badge status-planned">Next phase</span>
+                        </div>
+                        <div class="infra-card">
+                            <div class="infra-symbol orange">▥</div>
+                            <strong>Monitoring</strong>
+                            <p>Metrics and operational alerts</p>
+                            <span class="status-badge status-planned">Planned</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel activity-panel" id="activity-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Recent Activity</h2>
+                            <p>Development milestones and recent checks.</p>
+                        </div>
+                        <span class="subtle-label">THIS SESSION</span>
+                    </div>
+
+                    <div class="activity-list" id="activity-list">
+                        <div class="activity-item">
+                            <span class="activity-marker green"></span>
+                            <div class="activity-copy">
+                                <strong>Frontend dashboard loaded</strong>
+                                <p>The dashboard interface has been initialised.</p>
+                            </div>
+                            <time>Just now</time>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-marker blue"></span>
+                            <div class="activity-copy">
+                                <strong>API health monitoring configured</strong>
+                                <p>The dashboard will check the Flask health endpoint.</p>
+                            </div>
+                            <time>Setup</time>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-marker purple"></span>
+                            <div class="activity-copy">
+                                <strong>Infrastructure roadmap created</strong>
+                                <p>Docker, CI/CD and monitoring are planned next steps.</p>
+                            </div>
+                            <time>Planned</time>
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="page-footer">
+                    <span>XavierProject <span class="footer-separator">·</span> Platform Engineering Lab</span>
+                    <span>Built for learning, one step at a time.</span>
+                </footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
