@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:5000/api/health";
+const API_URL = "https://xavier-flask-api.onrender.com/api/health";
 
 const apiMetric = document.getElementById("api-metric");
 const apiDetail = document.getElementById("api-detail");
