@@ -1,7 +1,7 @@
 
 name: XavierProject CI Pipeline
 
-on:
+"on":
   push:
     branches:
       - main
@@ -35,4 +35,3 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t xavierproject:ci .
-```
